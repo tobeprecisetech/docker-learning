@@ -26,7 +26,10 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Backend Image
-        run: docker build -t my-backend ./backend
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/my-backend:latest ./backend
+
+      - name: Push Backend Image
+        run: docker push ghcr.io/${{ github.repository_owner }}/my-backend:latest
 
       - name: Build Frontend Image
         run: docker build -t my-frontend ./frontend
