@@ -6,7 +6,7 @@ describe('GET /api/hello', () => {
     const response = await request(app)
       .get('/api/hello');
 
-    expect(response.statusCode).toBe(500);
+    expect(response.statusCode).toBe(200);
 
     expect(response.body.message)
       .toBe('Hello from Node.js Backend!');
