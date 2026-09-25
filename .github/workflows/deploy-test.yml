@@ -23,3 +23,8 @@ jobs:
           echo "SSH connection successful!"
           hostname
           docker --version
+          cd ~/my-app
+          echo "Production directory:"
+          pwd
+          echo "Checking production compose:"
+          docker compose -f docker-compose.prod.yml config
