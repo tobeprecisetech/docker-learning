@@ -1,5 +1,14 @@
-describe("Backend Test", () => {
-  test("2 + 2 should equal 4", () => {
-    expect(2 + 2).toBe(4);
+const request = require('supertest');
+const app = require('../index');
+
+describe('GET /api/hello', () => {
+  test('should return hello message', async () => {
+    const response = await request(app)
+      .get('/api/hello');
+
+    expect(response.statusCode).toBe(500);
+
+    expect(response.body.message)
+      .toBe('Hello from Node.js Backend!');
   });
 });
