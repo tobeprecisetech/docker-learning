@@ -25,6 +25,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install Backend Dependencies
+        run: npm ci
+        working-directory: ./backend
+
+      - name: Run Backend Tests
+        run: npm test
+        working-directory: ./backend
+
       - name: Build Backend Image
         run: docker build -t ghcr.io/${{ github.repository_owner }}/my-backend:latest ./backend
 
