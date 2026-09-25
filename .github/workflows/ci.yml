@@ -53,5 +53,28 @@ jobs:
       - name: Push Frontend Image
         run: docker push ghcr.io/${{ github.repository_owner }}/my-frontend:latest
 
+      - name: Connect to Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          authkey: ${{ secrets.TS_AUTHKEY }}
+
+      - name: Deploy to production
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd ~/my-app
+
+            echo "Pulling latest images..."
+            docker compose -f docker-compose.prod.yml pull
+
+            echo "Starting updated containers..."
+            docker compose -f docker-compose.prod.yml up -d
+
+            echo "Checking containers..."
+            docker compose -f docker-compose.prod.yml ps
+
       - name: Build Success
         run: echo "Both images built successfully!"
